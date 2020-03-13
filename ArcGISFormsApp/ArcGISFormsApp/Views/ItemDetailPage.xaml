@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:esri="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+             xmlns:esriTK="clr-namespace:Esri.ArcGISRuntime.Toolkit.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Toolkit.Xamarin.Forms"
+             mc:Ignorable="d"
+             x:Class="ArcGISFormsApp.Views.ItemDetailPage"
+             Title="{Binding Title}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <!--<RowDefinition Height="50"/>-->
+        </Grid.RowDefinitions>
+        <esri:MapView x:Name="MyMapView" Grid.Row="0"
+                      Map="{Binding Item.Map}"
+                      GeoViewTapped="MyMapView_GeoViewTapped"/>
+        <!-- Popup control -->
+        <!--<esriTK:PopupViewer x:Name="popupViewer" Grid.Row="0"
+                            BackgroundColor="White"
+                            Foreground="Black"
+                            HorizontalOptions="StartAndExpand" 
+                            VerticalOptions="EndAndExpand"
+                            IsVisible="False"/>-->
+        <!--<Button Grid.Row="1" Text="Navigate"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                HeightRequest="45"
+                Clicked="Button_Clicked"/>-->
+    </Grid>
+            
+</ContentPage>
