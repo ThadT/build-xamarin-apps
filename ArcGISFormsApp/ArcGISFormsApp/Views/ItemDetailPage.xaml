@@ -11,22 +11,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <!--<RowDefinition Height="50"/>-->
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <esri:MapView x:Name="MyMapView" Grid.Row="0"
                       Map="{Binding Item.Map}"
                       GeoViewTapped="MyMapView_GeoViewTapped"/>
-        <!-- Popup control -->
-        <!--<esriTK:PopupViewer x:Name="popupViewer" Grid.Row="0"
-                            BackgroundColor="White"
-                            Foreground="Black"
-                            HorizontalOptions="StartAndExpand" 
-                            VerticalOptions="EndAndExpand"
-                            IsVisible="False"/>-->
-        <!--<Button Grid.Row="1" Text="Navigate"
+        <!-- Copied from toolkit sample
+             https://github.com/Esri/arcgis-toolkit-dotnet/blob/master/src/Samples/Toolkit.Samples.Forms/Toolkit.Samples.Forms/Samples/CompassMapViewSample.xaml#L11-L13 -->
+        <esriTK:Compass HorizontalOptions="End" VerticalOptions="Start" Margin="20"
+                    GeoView="{x:Reference MyMapView}" WidthRequest="30" HeightRequest="30"
+                    AutoHide="False" x:Name="compass" />
+        <!-- Copied from toolkit sample
+             https://github.com/Esri/arcgis-toolkit-dotnet/blob/master/src/Samples/Toolkit.Samples.Forms/Toolkit.Samples.Forms/Samples/ScaleLineSample.xaml#L11-L12 -->
+        <esriTK:ScaleLine HorizontalOptions="Start" VerticalOptions="End" Margin="20"
+                    MapView="{x:Reference MyMapView}"/>
+        <Button Grid.Row="1" Text="Show website"
                 HorizontalOptions="Center" VerticalOptions="Center"
                 HeightRequest="45"
-                Clicked="Button_Clicked"/>-->
+                Clicked="ShowWebsiteClicked"/>
     </Grid>
             
 </ContentPage>

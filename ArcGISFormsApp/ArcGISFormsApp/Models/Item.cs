@@ -14,8 +14,6 @@ namespace ArcGISFormsApp.Models
         public string Description { get; set; }
         public MapPoint DeviceLocation { get; set; }
         public Map Map { get; set; }
-        public FeatureLayer FavoritesLayer { get; set; }
-
 
         public Item(string id, string placeType, string description)
         {
@@ -28,7 +26,7 @@ namespace ArcGISFormsApp.Models
 
         private async Task GetLocationAndMap()
         {
-            // Get the device location
+            // Get the device location (Xamarin.Essentials)
             GeolocationRequest locationRequest = new GeolocationRequest(GeolocationAccuracy.Default);
             Location myLocation = await Geolocation.GetLocationAsync(locationRequest);
             DeviceLocation = new MapPoint(myLocation.Longitude, myLocation.Latitude, SpatialReferences.Wgs84);
@@ -37,19 +35,9 @@ namespace ArcGISFormsApp.Models
             DeviceLocation = new MapPoint(-117.160258, 32.707366, SpatialReferences.Wgs84);
 
             // Create a map for the location
-            Map map = new Map(Basemap.CreateStreets());
+            Map map = new Map(Basemap.CreateStreetsVector());
 
-            // Get the hosted layer that contains favorite locations
-            FeatureLayer favoritesLayer = new FeatureLayer(new Uri("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Favorite_places/FeatureServer/0"));
-
-            FavoritesLayer = favoritesLayer;
-
-            // If this is the favorites item, add the favorites layer to the map
-            if (Id == "favorites")
-            {
-                map.OperationalLayers.Add(favoritesLayer);
-            }
-
+            // Set the initial viewpoint for the map to the current location
             map.InitialViewpoint = new Viewpoint(DeviceLocation, 24000);
             await map.LoadAsync();
             Map = map;

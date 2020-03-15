@@ -12,13 +12,11 @@ namespace ArcGISFormsApp.Services
 
         public MockDataStore()
         {
-            var favoritesItem = new Item("favorites", "Favorite places", "These are my favorite places.");
             var iceCreamItem = new Item(Guid.NewGuid().ToString(), "Ice cream", "Find nearby ice cream or frozen yogurt.");
             var coffeeFavorite = new Item(Guid.NewGuid().ToString(), "Coffee", "Coffee shops in the area.");
 
             items = new List<Item>()
             {
-                favoritesItem,
                 iceCreamItem,
                 coffeeFavorite
             };

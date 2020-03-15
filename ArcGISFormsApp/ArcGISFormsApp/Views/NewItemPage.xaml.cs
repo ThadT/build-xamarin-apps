@@ -19,7 +19,7 @@ namespace ArcGISFormsApp.Views
         public NewItemPage()
         {
             InitializeComponent();
-            Item = new Item(Guid.NewGuid().ToString(), "Place category", "Find these types of places!");
+            Item = new Item(Guid.NewGuid().ToString(), "", "");
 
             BindingContext = this;
         }
