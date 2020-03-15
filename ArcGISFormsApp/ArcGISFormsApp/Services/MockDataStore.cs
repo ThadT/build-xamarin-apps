@@ -12,6 +12,7 @@ namespace ArcGISFormsApp.Services
 
         public MockDataStore()
         {
+            // These items will be used to search for points-of-interest.
             var iceCreamItem = new Item(Guid.NewGuid().ToString(), "Ice cream", "Find nearby ice cream or frozen yogurt.");
             var coffeeFavorite = new Item(Guid.NewGuid().ToString(), "Coffee", "Coffee shops in the area.");
 

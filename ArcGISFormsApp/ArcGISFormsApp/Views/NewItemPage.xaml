@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Place category" FontSize="Medium" />
-            <Entry Text="{Binding Item.Text}" d:Text="Place" FontSize="Small" />
+            <Entry Text="{Binding Item.PlaceType}" d:Text="Place" FontSize="Small" />
             <Label Text="Description" FontSize="Medium" />
             <Editor Text="{Binding Item.Description}" d:Text="Description" FontSize="Small" Margin="0" />
         </StackLayout>
