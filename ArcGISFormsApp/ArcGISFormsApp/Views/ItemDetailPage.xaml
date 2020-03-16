@@ -23,9 +23,9 @@
              https://github.com/Esri/arcgis-toolkit-dotnet/blob/master/src/Samples/Toolkit.Samples.Forms/Toolkit.Samples.Forms/Samples/ScaleLineSample.xaml#L11-L12 -->
 
         <!-- TODO: add button to show website for selected place -->
-        <!--<Button Grid.Row="1" Text="Show website"
+        <!--<Button Grid.Row="1" Text="Button1"
                 HorizontalOptions="Center" VerticalOptions="Center"
-                HeightRequest="45"
+                HeightRequest="25"
                 Clicked="ShowWebsiteClicked"/>-->
     </Grid>
             

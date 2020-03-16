@@ -27,16 +27,18 @@ namespace ArcGISFormsApp.ViewModels
 
         public async Task<List<Graphic>> FindPlaces(MapPoint myLocation)
         {
+            IReadOnlyList<GeocodeResult> matches = null;
             List<Graphic> placeGraphics = new List<Graphic>();
 
-            #region Search for places
-            //  From .NET Developers Guide: Search for places topic
+            //  Use code from .NET Developers Guide: Search for places topic
             //        https://developers.arcgis.com/net/latest/wpf/guide/search-for-places-geocoding-.htm
-            // Finding geocode output attributes: https://developers.arcgis.com/rest/geocode/api-reference/geocoding-service-output.htm
-            // ** Go to https://developers.arcgis.com/rest/ and then search "Geocode service" ... it'll be about the 5th match!
+            //
+            // To find geocode output attributes: https://developers.arcgis.com/rest/geocode/api-reference/geocoding-service-output.htm
+            // ** Go to https://developers.arcgis.com/rest/ and then search "Geocode service" ... it'll be about the 5th match
+            //
             // If letting the user select result output attributes, see "Search for places" topic and search the page for "Get locator info"
 
-
+            #region Search for places
             //var geocodeServiceUrl = @"https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
             //LocatorTask geocodeTask = await LocatorTask.CreateAsync(new Uri(geocodeServiceUrl));
 
@@ -57,39 +59,31 @@ namespace ArcGISFormsApp.ViewModels
             //geocodeParams.ResultAttributeNames.Add("URL");
 
             //// find candidates using a place category
-            //var matches = await geocodeTask.GeocodeAsync(Item.PlaceType.ToLower(), geocodeParams);
+            //matches = await geocodeTask.GeocodeAsync(Item.PlaceType.ToLower(), geocodeParams);
 
             //if (matches.Count == 0) { return null; }
 
-            // ** end: search for places
             #endregion
-            //  Use code from .NET Developers Guide: Search for places topic
-            //        https://developers.arcgis.com/net/latest/wpf/guide/search-for-places-geocoding-.htm
-            //
-            // To find geocode output attributes: https://developers.arcgis.com/rest/geocode/api-reference/geocoding-service-output.htm
-            // ** Go to https://developers.arcgis.com/rest/ and then search "Geocode service" ... it'll be about the 5th match
-            //
-            // If letting the user select result output attributes, see "Search for places" topic and search the page for "Get locator info"
 
 
             #region Create graphics from results
-            
-            //foreach (var m in matches)
-            //{
-            //    // Get the match attribute values
-            //    string name = m.Attributes["PlaceName"].ToString();
-            //    string address = m.Attributes["Place_addr"].ToString();
-            //    string url = m.Attributes["URL"].ToString();
 
-            //    // Create a graphic to represent this place, add the attribute values
-            //    Graphic poi = new Graphic(m.DisplayLocation);
-            //    poi.Attributes.Add("Address", address);
-            //    poi.Attributes.Add("Name", name);
-            //    poi.Attributes.Add("URL", url);
+            foreach (var m in matches)
+            {
+                // Get the match attribute values
+                string name = m.Attributes["PlaceName"].ToString();
+                string address = m.Attributes["Place_addr"].ToString();
+                string url = m.Attributes["URL"].ToString();
 
-            //    // Add the place graphic to the collection
-            //    placeGraphics.Add(poi);
-            //}
+                // Create a graphic to represent this place, add the attribute values
+                Graphic poi = new Graphic(m.DisplayLocation);
+                poi.Attributes.Add("Address", address);
+                poi.Attributes.Add("Name", name);
+                poi.Attributes.Add("URL", url);
+
+                // Add the place graphic to the collection
+                placeGraphics.Add(poi);
+            }
 
             // ** end: create graphics
             #endregion
@@ -101,11 +95,11 @@ namespace ArcGISFormsApp.ViewModels
         {
             Graphic routeGraphic = null;
 
-            #region
-            // From .NET Developers Guide: Find a route topic
+            // Use code from .NET Developers Guide: Find a route topic
             //       https://developers.arcgis.com/net/latest/wpf/guide/find-a-route.htm
 
-            // Use the San Diego route service
+            #region solve a route
+            //// Use the San Diego route service
             //var routeSourceUri = new Uri("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
             //var routeTask = await RouteTask.CreateAsync(routeSourceUri);
 
@@ -118,8 +112,8 @@ namespace ArcGISFormsApp.ViewModels
             //routeParams.OutputSpatialReference = outSpatialReference;
 
             //// ---Call the function to get the "WALK" travel mode
-            //TravelMode walkMode = FindTravelMode(routeTask.RouteTaskInfo.TravelModes, "WALK");
-            //if (walkMode != null) { routeParams.TravelMode = walkMode; }
+            ////TravelMode walkMode = FindTravelMode(routeTask.RouteTaskInfo.TravelModes, "WALK");
+            ////if (walkMode != null) { routeParams.TravelMode = walkMode; }
             //// ---
 
             //// create a Stop for my location
@@ -145,32 +139,28 @@ namespace ArcGISFormsApp.ViewModels
             //routeGraphic = new Graphic(route.RouteGeometry, routeSymbol);
             #endregion
 
-            // Use code from .NET Developers Guide: Find a route topic
-            //       https://developers.arcgis.com/net/latest/wpf/guide/find-a-route.htm
-
-
             return routeGraphic;
         }
 
         // Figure out how to get the "walk" travel mode. See the .NET samples page: search "TravelMode"
         //      https://developers.arcgis.com/net/latest/wpf/sample-code/offline-routing/
         #region
-        //private TravelMode FindTravelMode(IReadOnlyList<TravelMode> travelModes, string mode)
-        //{
+        private TravelMode FindTravelMode(IReadOnlyList<TravelMode> travelModes, string mode)
+        {
 
-        //    TravelMode foundMode = null;
+            TravelMode foundMode = null;
 
-        //    foreach (var m in travelModes)
-        //    {
-        //        if (m.Type.ToLower() == mode.ToLower())
-        //        {
-        //            foundMode = m;
-        //            break;
-        //        }
-        //    }
+            foreach (var m in travelModes)
+            {
+                if (m.Type.ToLower() == mode.ToLower())
+                {
+                    foundMode = m;
+                    break;
+                }
+            }
 
-        //    return foundMode;
-        //}
+            return foundMode;
+        }
         #endregion
     }
 }
